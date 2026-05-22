@@ -25,6 +25,9 @@ app = FastAPI(title="GeneTrace", version="0.1.0", lifespan=lifespan)
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://gene-trace-qcc2r23wz-sidselothcodes-projects.vercel.app",
+    "https://gene-trace.vercel.app",
+    "https://*.vercel.app",
 ]
 app.add_middleware(
     CORSMiddleware,
