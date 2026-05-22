@@ -1,0 +1,563 @@
+:root {
+  --bg: #FBF5DD;
+  --surface: #FFFDF4;
+  --surface-2: #E7E1B1;
+  --border: #D9D29A;
+  --border-strong: #C4BB7A;
+  --text-1: #1A1A0F;
+  --text-2: #4A4A2A;
+  --text-3: #7A7A50;
+  --accent: #306D29;
+  --accent-bg: #E8F5E5;
+  --green: #306D29;
+  --green-bg: #E8F5E5;
+  --green-border: #A8D4A2;
+  --amber: #7A6A10;
+  --amber-bg: #F5F0CC;
+  --amber-border: #E7E1B1;
+  --red: #8B1A1A;
+  --red-bg: #FDF0F0;
+  --red-border: #E8B4B4;
+  --pathogenic: #8B1A1A;
+  --pathogenic-bg: #FDF0F0;
+  --benign: #306D29;
+  --benign-bg: #E8F5E5;
+  --uncertain: #7A6A10;
+  --uncertain-bg: #F5F0CC;
+  --btn-bg: #0D530E;
+  --btn-hover: #306D29;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+.sans {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.brico {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ============ Layout ============ */
+.app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 640px 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* ============ Search bar ============ */
+.searchbar {
+  display: flex;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.searchbar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.searchbar.loading {
+  animation: pulseBorder 1.2s ease infinite;
+}
+
+@keyframes pulseBorder {
+  0%, 100% { border-color: var(--border); }
+  50% { border-color: var(--accent); }
+}
+
+.searchbar input {
+  flex: 1;
+  padding: 12px 14px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
+  color: var(--text-1);
+  min-width: 0;
+}
+
+.searchbar input::placeholder {
+  color: var(--text-3);
+}
+
+.searchbar button {
+  padding: 0 22px;
+  background: var(--btn-bg);
+  color: #fff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 0;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.searchbar button:hover:not(:disabled) {
+  background: var(--btn-hover);
+}
+
+.searchbar button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ============ Cards ============ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  animation: fadeUp 0.3s ease both;
+  animation-delay: calc(var(--i, 0) * 0.05s);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.card-content {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-1);
+  white-space: pre-wrap;
+}
+
+/* ============ Gene header card ============ */
+.gene-header .gene-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.gene-header .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+}
+
+.badge.active {
+  background: var(--green-bg);
+  border-color: var(--green-border);
+  color: var(--green);
+}
+
+.eval-score {
+  margin-top: 18px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.eval-score-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.eval-score-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+.eval-table {
+  width: 100%;
+  margin-top: 14px;
+  border-collapse: collapse;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.eval-table th,
+.eval-table td {
+  text-align: left;
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.eval-table th {
+  font-weight: 500;
+  color: var(--text-3);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.eval-table td:last-child,
+.eval-table th:last-child {
+  text-align: right;
+}
+
+.eval-table tr.total td {
+  font-weight: 600;
+  color: var(--text-1);
+  border-bottom: none;
+  padding-top: 10px;
+}
+
+/* ============ Variant rows (ClinVar) ============ */
+.variant-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.variant-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.variant-row:first-child {
+  padding-top: 0;
+}
+
+.variant-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.variant-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.condition-text {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.sig-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.sig-pathogenic {
+  background: var(--pathogenic-bg);
+  color: var(--pathogenic);
+  border-color: var(--red-border);
+}
+
+.sig-benign {
+  background: var(--benign-bg);
+  color: var(--benign);
+  border-color: var(--green-border);
+}
+
+.sig-uncertain {
+  background: var(--uncertain-bg);
+  color: var(--uncertain);
+  border-color: var(--amber-border);
+}
+
+.sig-neutral {
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-color: var(--border);
+}
+
+/* ============ Protein function ============ */
+.protein-header {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.show-more {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.show-more:hover {
+  text-decoration: underline;
+}
+
+/* ============ Paper rows (PubMed) ============ */
+.paper-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.paper-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.paper-row:first-child {
+  padding-top: 0;
+}
+
+.paper-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.45;
+}
+
+.paper-meta {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ============ Empty / error states ============ */
+.empty-state {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: normal;
+  padding: 4px 0;
+}
+
+.empty {
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.error {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  color: var(--red);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+/* ============ History sidebar ============ */
+.history {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 24px;
+}
+
+.history-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 12px;
+}
+
+.history-empty {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-3);
+  padding: 24px 0;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-item:hover {
+  background: var(--bg);
+}
+
+.history-item-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-item-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.history-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.history-chip.good {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.history-chip.warn {
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.history-chip.bad {
+  background: var(--red-bg);
+  color: var(--red);
+}
+
+.history-delete {
+  color: var(--text-3);
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.12s ease, background 0.12s ease;
+}
+
+.history-delete:hover {
+  color: var(--red);
+  background: var(--red-bg);
+}
+
+.history-delete svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
